@@ -1,4 +1,4 @@
-using System
+using System;
 using System.Collections.Generic;
 using SocketIOClient;
 using SocketIOClient.Newtonsoft.Json;
@@ -15,7 +15,14 @@ public class SocketIOClientExample : MonoBehaviour
     void Start()
     {
         var uri = new Uri(serverUrlLink);
-        socket = new SocketIOUnity(uri);
+        socket = new SocketIOUnity(uri, new SocketIOOptions
+        {
+            Auth = new Dictionary<string, string>
+            {
+                {"token", "UNITY" }
+            }
+            ,Transport = SocketIOClient.Transport.TransportProtocol.WebSocket
+        });
 
         socket.OnConnected += (sender, e) =>
         {
