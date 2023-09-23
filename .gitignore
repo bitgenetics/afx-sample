@@ -70,3 +70,18 @@ crashlytics-build.properties
 # Temporary auto-generated Android Assets
 /[Aa]ssets/[Ss]treamingAssets/aa.meta
 /[Aa]ssets/[Ss]treamingAssets/aa/*
+
+
+
+#kdiff
+_LOCAL*
+_BASE*
+_BACKUP*
+_REMOTE*
+._LOCAL*
+._BASE*
+._BACKUP*
+._REMOTE*
+
+*.orig
+*.swp
