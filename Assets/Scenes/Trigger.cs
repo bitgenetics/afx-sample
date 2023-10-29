@@ -2,10 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// A timed trigger behavior that changes object color and calls the SwitchActivated event.
+/// </summary>
 public class Trigger : MonoBehaviour
 {
+    public float delayTime = 5f;
+
+
     // Start is called before the first frame update
-    bool bEnabled = true;
+    protected bool bEnabled = true;
+    
     void Start()
     {
         
@@ -16,10 +23,17 @@ public class Trigger : MonoBehaviour
     {
         
     }
+
+    /// <summary>
+    /// enable trigger after a timed delay
+    /// </summary>
+    /// <returns></returns>
     IEnumerator DelayedEnable()
     {
-        yield return new WaitForSeconds(5f);// Wait for one second
+        yield return new WaitForSeconds(delayTime);
         bEnabled = true;
+        this.gameObject.GetComponent<Renderer>().material.color = new Color(1, 1, 1);
+
        
     }
 
@@ -35,7 +49,10 @@ public class Trigger : MonoBehaviour
         }
         Debug.Log("OnCollisionEnter - trigger enabled");
         bEnabled = false;
+        
+        this.gameObject.GetComponent<Renderer>().material.color = new Color(1, 0, 0);
+
         StartCoroutine(DelayedEnable());
-        EventManager.TriggerFx();
+        EventManager.EmitSwitchActivated();
     }
 }

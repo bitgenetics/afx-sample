@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// a Thrust behavior component which applys a fixed impulse on activations.
+/// </summary>
 public class ThrustFx : MonoBehaviour
 {
 

@@ -1,5 +1,8 @@
 using UnityEngine;
 
+/// <summary>
+/// A force mode component example from  unity docs
+/// </summary>
 public class ForceModeExample : MonoBehaviour
 {
     //Use to switch between Force Modes

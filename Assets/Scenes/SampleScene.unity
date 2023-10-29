@@ -161,6 +161,7 @@ GameObject:
   m_Component:
   - component: {fileID: 484056350}
   - component: {fileID: 484056351}
+  - component: {fileID: 484056352}
   m_Layer: 0
   m_Name: EventManager
   m_TagString: Untagged
@@ -195,6 +196,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 477dee9fa5ebc1f4dadf9f37769396e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  AfxClient: {fileID: 484056352}
+--- !u!114 &484056352
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 484056349}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 55ff6c26a1750bd42ac89f214c876cc4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  apiUrl: https://server-mjb.local.affectfx.com:9602
+  websocketUrl: https://server-mjb.local.affectfx.com:9602
+  ApiKey: b5d698ec-339e-48c0-aeb1-30d5369bca79
+  GameFxChannelKey: 5ab79196-73f0-49c7-8a3a-f061a08229f0
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -624,6 +642,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7448384c3dfcfa46b2632f2d8254b4d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  delayTime: 5
 --- !u!64 &2062466299
 MeshCollider:
   m_ObjectHideFlags: 0

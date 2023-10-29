@@ -7,7 +7,7 @@ using NativeWebSocket;
 
 
 
-public class AfxClient : MonoBehaviour
+public class AfxClient_old : MonoBehaviour
 {
     WebSocket websocket;
 
