@@ -210,7 +210,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   apiUrl: https://server-mjb.local.affectfx.com:9602
-  websocketUrl: https://server-mjb.local.affectfx.com:9602
+  websocketUrl: http://server-mjb.local.affectfx.com:9702
   ApiKey: b5d698ec-339e-48c0-aeb1-30d5369bca79
   GameFxChannelKey: 5ab79196-73f0-49c7-8a3a-f061a08229f0
 --- !u!1 &705507993

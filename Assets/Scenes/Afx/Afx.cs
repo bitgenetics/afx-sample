@@ -29,12 +29,10 @@ class Sequence
     public SequenceGameFxItem[] items;
 }
 
-//[{\"version\":\"1.0\",\"player\":\"game\",\"sequence\":{\"type\":\"SEQUENCE\",\"items\":[{\"fxId\":\"8168c6cf-4b5e-4bb1-9823-1ec837d00b1d\",\"gameFxId\":\"drop_box\"}]}},\"19594700-a96f-436f-be71-e5dbfbe79aac\",0]"
-
 class AfxScript
-{
+{   
     public string version;
-    public string? player;
+    public string player;
     //assets?: Record<string, IAssetItem>;
     public Sequence sequence;
     //presentedBy?: IPresentedByData;
@@ -60,8 +58,9 @@ internal class IdOnly
 /// </summary>
 public class Afx : MonoBehaviour
 {
+    public bool isActive { get; set; }
     public string apiUrl = "http://localhost:3000";
-    public string websocketUrl = "wss://localhost:3000";
+    public string websocketUrl = "http://localhost:3000";
 
 
     public IAfxInteractionManager interactionManager;
@@ -75,6 +74,27 @@ public class Afx : MonoBehaviour
 
     void Start()
     {
+
+    }
+
+    public void ConnectSocketIO()
+    {
+        socket.Connect();
+    }
+
+    public void DisconnectSocketIO()
+    {
+        socket.Disconnect();
+    }
+
+
+    public void SetupSocketIO()
+    {
+        if (socket != null)
+        {
+            socket.Dispose();
+        }
+
         var uri = new Uri(websocketUrl);
         socket = new SocketIOUnity(uri, new SocketIOOptions
         {
@@ -82,8 +102,9 @@ public class Afx : MonoBehaviour
             {
                 {"token", GameFxChannelKey }
             }
-            ,Transport = SocketIOClient.Transport.TransportProtocol.WebSocket
- 
+            ,
+            Transport = SocketIOClient.Transport.TransportProtocol.WebSocket
+
         });
 
 
@@ -102,28 +123,17 @@ public class Afx : MonoBehaviour
             string fxRequestId = obj[AfxWebSocketRequest.FxReqIdIndex].ToString();
             AfxScript afxScript = JsonConvert.DeserializeObject<AfxScript>(obj[AfxWebSocketRequest.AfxIndex].ToString());
             string channelCB = $"afx-{this.GameFxChannelKey}-{fxRequestId}";
-            System.Object[] data = { new AfxEffectResponse { id = fxRequestId, success = true, type= "PlayRequestResponse" }}; 
+            System.Object[] data = { new AfxEffectResponse { id = fxRequestId, success = true, type = "PlayRequestResponse" } };
 
             if (obj != null) PlayFx?.Invoke(afxScript.sequence.items[0].gameFxId);
             //socket.EmitAsync(channelCB, data).Wait(10000);
             socket.Emit(channelCB, data);
 
-
-
             Debug.Log("Event" + request.ToString());
-            //Debug.Log(request.GetValue<string>());
         });
 
-       socket.Connect();
-
     }
 
-
-    private static bool TrustCertificate(object sender, X509Certificate x509Certificate, X509Chain x509Chain, SslPolicyErrors sslPolicyErrors)
-    {
-        // all certificates are accepted
-        return true;
-    }
     void Update()
     {
      
@@ -162,6 +172,8 @@ public class Afx : MonoBehaviour
 
     public void EmitEvent(string afxEventId)
     {
+        if (!isActive) return;
+
         StartCoroutine(EmitGameEvent(afxEventId));
     }
 
@@ -181,7 +193,7 @@ public class Afx : MonoBehaviour
         
         using (UnityWebRequest www = UnityWebRequest.Post(this.apiUrl+"/api/game/event", obj, "application/json"))
         {
-            www.certificateHandler = new AcceptAllCertificatesSignedWithASpecificKeyPublicKey();
+            www.certificateHandler = new AcceptAllCertsLocalDevelopmentHandler();
             //www.certificateHandler = null;
 
             www.SetRequestHeader("x-api-key", this.ApiKey);
@@ -203,7 +215,7 @@ public class Afx : MonoBehaviour
         var obj = JsonConvert.SerializeObject(afxEffect);
         using (UnityWebRequest www = UnityWebRequest.Post(this.apiUrl+"/api/game/effect", obj, "application/json"))
         {
-            www.certificateHandler = new AcceptAllCertificatesSignedWithASpecificKeyPublicKey();
+            www.certificateHandler = new AcceptAllCertsLocalDevelopmentHandler();
             //www.certificateHandler = null;
 
             www.SetRequestHeader("x-api-key", this.ApiKey);
@@ -222,10 +234,10 @@ public class Afx : MonoBehaviour
 
     IEnumerator EmitGameEvent(string afxEventId)
     {
-      
+        Debug.Log("calling EmitGameEvent");
         using (UnityWebRequest www = UnityWebRequest.Post(this.apiUrl + "/api/game/event/"+ afxEventId, "","application/json"))
         {
-            www.certificateHandler = new AcceptAllCertificatesSignedWithASpecificKeyPublicKey();
+            www.certificateHandler = new AcceptAllCertsLocalDevelopmentHandler();
             //www.certificateHandler = null;
 
             www.SetRequestHeader("x-api-key", this.ApiKey);

@@ -9,6 +9,5 @@ namespace Assets.Scenes.Afx
     public interface IAfxInteractionManager
     {
         void PlayFx(string afxEffectId);
-        void EmitEventToAfxAsync(string afxEventId);
     }
 }

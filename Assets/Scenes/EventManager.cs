@@ -34,11 +34,16 @@ public class EventManager : MonoBehaviour, IAfxInteractionManager
     {
         if (AfxClient != null)
         {
+
+            AfxClient.isActive = true;
             AfxClient.events.Add(SwitchActivatedEvent);
             AfxClient.effects.Add(DropBoxEffect);
             AfxClient.PlayFx += PlayFx;
             EventManager.EmitEvent += AfxClient.EmitEvent;
+            AfxClient.SetupSocketIO();
+            AfxClient.ConnectSocketIO();
             AfxClient.RegisterWithAfx();
+
         }
 
     }
