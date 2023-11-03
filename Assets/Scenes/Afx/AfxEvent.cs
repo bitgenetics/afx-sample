@@ -25,5 +25,8 @@ namespace Assets.Scenes.Afx
         /// <remarks>Example: An in game actor stepped on a floor switch in the current active scene.</remarks>
         public string description { get; set; }
 
+        public string game_name { get; set; }
+        public string game_version { get; set; }
+
     }
 }

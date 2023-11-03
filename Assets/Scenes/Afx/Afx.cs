@@ -1,3 +1,5 @@
+#define DEBUG_LOCAL
+
 using System;
 using System.Collections.Generic;
 using SocketIOClient;
@@ -193,8 +195,10 @@ public class Afx : MonoBehaviour
         
         using (UnityWebRequest www = UnityWebRequest.Post(this.apiUrl+"/api/game/event", obj, "application/json"))
         {
+
+#if DEBUG_LOCAL
             www.certificateHandler = new AcceptAllCertsLocalDevelopmentHandler();
-            //www.certificateHandler = null;
+#endif
 
             www.SetRequestHeader("x-api-key", this.ApiKey);
             yield return www.SendWebRequest();
@@ -215,8 +219,9 @@ public class Afx : MonoBehaviour
         var obj = JsonConvert.SerializeObject(afxEffect);
         using (UnityWebRequest www = UnityWebRequest.Post(this.apiUrl+"/api/game/effect", obj, "application/json"))
         {
+#if DEBUG_LOCAL
             www.certificateHandler = new AcceptAllCertsLocalDevelopmentHandler();
-            //www.certificateHandler = null;
+#endif
 
             www.SetRequestHeader("x-api-key", this.ApiKey);
             yield return www.SendWebRequest();

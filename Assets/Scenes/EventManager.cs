@@ -12,6 +12,8 @@ using UnityEngine;
 /// </summary>
 public class EventManager : MonoBehaviour, IAfxInteractionManager
 {
+    static string GameName = "AfxSample";
+    static string Version = "1.0";
     public static event Action DropBox;
     public static event Action<string> EmitEvent;
 
@@ -20,8 +22,8 @@ public class EventManager : MonoBehaviour, IAfxInteractionManager
     public Afx AfxClient = null;
 
 
-    protected static AfxEffect DropBoxEffect = new AfxEffect() { game_fx_id="drop_box", name="Drop Box", description="Drops a box in the game."};
-    protected static AfxEvent SwitchActivatedEvent = new AfxEvent() { game_event_id = "switch_activated", name = "Switch Activated", description = "Triggered when the switch is activated in the game." };
+    protected static AfxEffect DropBoxEffect = new AfxEffect() { game_fx_id="drop_box", name="Drop Box", description="Drops a box in the game.", game_name = GameName, game_version = Version };
+    protected static AfxEvent SwitchActivatedEvent = new AfxEvent() { game_event_id = "switch_activated", name = "Switch Activated", description = "Triggered when the switch is activated in the game.", game_name=GameName, game_version=Version };
     // Start is called before the first frame update
 
     EventManager()

@@ -38,5 +38,8 @@ namespace Assets.Scenes.Afx
         /// optional url to a preview mp4 video of the in game effect.
         /// </summary>
         public string preview_video_url { get; set; }
+
+        public string game_name { get; set; }
+        public string game_version { get; set; }
     }
 }
